@@ -11,16 +11,21 @@ var movieSchema = new mongoose.Schema({
   watched: Boolean,
   year: Number,
   IMDBrating: Number, // or Decimal128 ??
-  runtime: String
+  runtime: String,
+  image: String
 });
 movieSchema.path('title').index({unique: true});
 
 var Movies = mongoose.model('Movies', movieSchema);
 
-var save = (title) => {
+var save = (title, year, rating, runtime, image) => {
   var newMovie = new Movies({
     title: title,
-    watched: false
+    watched: false,
+    year: year,
+    IMDBrating: rating, // or Decimal128 ??
+    runtime: runtime,
+    image: image
   });
   return newMovie.save();
 };

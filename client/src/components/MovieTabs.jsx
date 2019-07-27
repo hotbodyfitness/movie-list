@@ -48,6 +48,7 @@ var MovieTabs = ({ movies, filter, watched, changeState }) => {
       {<div>
         {filtered.length ? filtered.map((e, i) => {
           return (<div key={i}>{e.title}
+            {/* <input type="radio" id={e.title} style={buttonStyle} onClick={changeWatched}></input> */}
             <button id={e.title} style={buttonStyle} onClick={changeWatched}>Watched</button>
           </div>
           )
