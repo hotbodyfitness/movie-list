@@ -15,7 +15,8 @@ class App extends React.Component {
         { title: 'Ex Machina' }
       ],
       filter: '',
-      watched: false
+      watched: false,
+      display: []
     }
   }
 
@@ -31,6 +32,7 @@ class App extends React.Component {
             watched: false
           });
         }
+        console.log('Hello World');
         document.getElementById('add').value = '';
       }
     });
@@ -45,6 +47,7 @@ class App extends React.Component {
         this.setState({
           movies: result
         });
+        console.log('Hello World');
         document.getElementById('add').value = '';
       }
     });
@@ -74,8 +77,22 @@ class App extends React.Component {
         this.setState({
           movies: result
         });
+        console.log('Hello World');
         document.getElementById('add').value = '';
       }
+    });
+  }
+
+  movieDisplay(title) {
+    var newArr = this.state.display.slice();
+    if (this.state.display.includes(title)) {
+      var index = this.state.display.indexOf(title);
+      newArr.splice(index, 1);
+    } else {
+      newArr.push(title);
+    }
+    this.setState({
+      display: newArr
     });
   }
 
@@ -92,7 +109,7 @@ class App extends React.Component {
   }
 
   render() {
-    var { movies, filter, watched } = this.state;
+    var { movies, filter, watched, display } = this.state;
     var style = { "background": "lightgreen" };
     return (
       <div>
@@ -103,7 +120,7 @@ class App extends React.Component {
         <button onClick={this.clickHandler.bind(this)}>Go!</button><br />
         <button id="watched" onClick={this.makeTrue.bind(this)}>Watched</button>
         <button id="not" style={style} onClick={this.makeFalse.bind(this)}>To Watch</button>
-        <MovieTabs movies={movies} filter={filter} watched={watched} changeState={this.changeState.bind(this)} />
+        <MovieTabs movies={movies} filter={filter} watched={watched} changeState={this.changeState.bind(this)} movieDisplay={this.movieDisplay.bind(this)} displayArr={display} />
       </div>
     )
   }

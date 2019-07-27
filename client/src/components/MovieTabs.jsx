@@ -1,7 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
+import MovieInfo from './MovieInfo.jsx';
 
-var MovieTabs = ({ movies, filter, watched, changeState }) => {
+var MovieTabs = ({ movies, filter, watched, changeState, movieDisplay, displayArr }) => {
   var watchedArray = [];
   var notWatchedArray = [];
   movies.forEach((e, i) => {
@@ -12,7 +13,7 @@ var MovieTabs = ({ movies, filter, watched, changeState }) => {
     }
   });
   if (watched) {
-    var buttonStyle = { 'background': 'lightgreen', 'position': 'absolute', 'left': '120px' };
+    // var buttonStyle = { 'background': 'lightgreen', 'position': 'absolute', 'left': '120px' };
     var filtered = watchedArray.filter((each) => {
       if (each.title) {
         if (each.title.toLowerCase().includes(filter)) {
@@ -21,7 +22,7 @@ var MovieTabs = ({ movies, filter, watched, changeState }) => {
       }
     });
   } else {
-    var buttonStyle = { 'position': 'absolute', 'left': '120px' };
+    // var buttonStyle = { 'position': 'absolute', 'left': '120px' };
     var filtered = notWatchedArray.filter((each) => {
       if (each.title) {
         if (each.title.toLowerCase().includes(filter)) {
@@ -31,25 +32,21 @@ var MovieTabs = ({ movies, filter, watched, changeState }) => {
     });
   }
 
-  var changeWatched = (e) => {
-    var title = e.target.id;
-    $.ajax({
-      data: title,
-      method: 'POST',
-      url: '/watched',
-      success: (title) => {
-        changeState(title);
-      }
-    });
+  var truthy = (title) => {
+    if (displayArr.includes(title)) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
     <div>
       {<div>
         {filtered.length ? filtered.map((e, i) => {
-          return (<div key={i}>{e.title}
-            {/* <input type="radio" id={e.title} style={buttonStyle} onClick={changeWatched}></input> */}
-            <button id={e.title} style={buttonStyle} onClick={changeWatched}>Watched</button>
+          return (<div><button key={i} onClick={() => {movieDisplay(e.title)}}>{e.title}</button>
+            <div id={i}><MovieInfo movies={movies} title={e.title} watched={watched} changeState={changeState} index={i} truthy={() => (truthy(e.title))} /></div>
+            {/* <button id={e.title} style={buttonStyle} onClick={changeWatched}>Watched</button> */}
           </div>
           )
         }) : <p>No movies by that name found</p>}
