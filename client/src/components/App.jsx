@@ -39,7 +39,6 @@ class App extends React.Component {
   }
 
   changeState(title) {
-    // console.log('from child:', title)
     $.ajax({
       method: 'GET',
       url: '/movies',

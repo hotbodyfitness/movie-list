@@ -10,7 +10,7 @@ var movieSchema = new mongoose.Schema({
   title: {type: String, unique: true},
   watched: Boolean,
   year: Number,
-  IMDBrating: Number, // or Decimal128 ??
+  IMDBrating: Number,
   runtime: String,
   image: String
 });
@@ -23,7 +23,7 @@ var save = (title, year, rating, runtime, image) => {
     title: title,
     watched: false,
     year: year,
-    IMDBrating: rating, // or Decimal128 ??
+    IMDBrating: rating,
     runtime: runtime,
     image: image
   });
